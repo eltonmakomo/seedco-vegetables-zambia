@@ -4,4 +4,4 @@
 - [x] Verify navigation, product details, metadata, mobile presentation, and missing links.
 - [x] Apply the selected glassmorphic agro-modern visual direction across the website and verify desktop/mobile presentation.
 - [x] Restore inside-page banner flow and visible content after the shared image class collision.
-- [ ] Refine the homepage banner without changing the rest of the homepage (awaiting selected visual direction).
+- [x] Refine the homepage banner in the selected luminous botanical glass direction without changing the rest of the homepage.
