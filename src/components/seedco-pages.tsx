@@ -15,7 +15,7 @@ type Product = typeof catalogue.products[number];
 const intro = 'Seed Co Vegetables Zambia, trading as Prime Seed Co is a vegetable seed business that is primarily involved in the supply of Certified hybrid and open pollinated Vegetable Seeds.';
 const itemUrl = (path:string) => `/${path}/`;
 export function PageHeader({eyebrow,title,description,image}: {eyebrow?:string;title:string;description?:string;image?:string}) {
- return <div className={`page-hero ${image?'page-hero-image':''}`}>
+ return <div className={`page-hero ${image?'has-photo':''}`}>
  {image && <img className="page-hero-photo" src={image} alt=""/>}
  <div className="site-container page-hero-inner"><div className="page-hero-copy"><span className="eyebrow eyebrow-light"><span className="eyebrow-dot"/> {eyebrow || 'SEED CO VEGETABLES / ZAMBIA'}</span><h1>{title}</h1>{description && <p>{description}</p>}</div><div className="page-hero-mark" aria-hidden="true">SC.</div></div>
  </div>;
