@@ -1,0 +1,69 @@
+{
+  "about-us/management-team": [
+    {
+      "name": "Grace Bwanali",
+      "role": "Managing Director"
+    },
+    {
+      "name": "Tichaona Ravasingadi",
+      "role": "Finance Director"
+    },
+    {
+      "name": "Mukumbi Kyalusanza",
+      "role": "Commercial Director"
+    },
+    {
+      "name": "Katende M Chibwe",
+      "role": "Vegetable Business Commercial Lead"
+    },
+    {
+      "name": "Nyambe Mubita",
+      "role": "Human Resource Manager"
+    }
+  ],
+  "about-us/sales-team": [
+    {
+      "name": "Katende Chibwe",
+      "role": "Sales and Marketing Coordinator (Vegetables)"
+    },
+    {
+      "name": "Simon Kalenga",
+      "role": "Sales Team member"
+    },
+    {
+      "name": "Mr. Musa Muyatwa",
+      "role": "Regional Sales Manager - Copperbelt Region"
+    },
+    {
+      "name": "Mr. Kafula Chewe",
+      "role": "Regional Sales Manager – Northern Region (Kasama & Mpika)"
+    },
+    {
+      "name": "Mr. Alex Shamane",
+      "role": "Regional Sales Manager – Southern & Western Region"
+    },
+    {
+      "name": "Mrs. Grace  Kalungu",
+      "role": "Regional Sales Manager- Lusaka"
+    },
+    {
+      "name": "Mr. Katowando Chawinga",
+      "role": "Regional Sales Manager – Central Region"
+    },
+    {
+      "name": "Mr. Mathews Kandela",
+      "role": "Regional Sales Manager – Eastern Region"
+    }
+  ],
+  "about-us/research-team": [
+    {
+      "name": "Silas Mutota",
+      "role": ""
+    },
+    {
+      "name": "Sydney Siachele",
+      "role": ""
+    }
+  ],
+  "about-us/board-of-directors": []
+}
