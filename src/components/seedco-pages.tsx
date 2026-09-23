@@ -20,7 +20,7 @@ export function PageHeader({eyebrow,title,description,image}: {eyebrow?:string;t
  <div className="site-container page-hero-inner"><div className="page-hero-copy"><span className="eyebrow eyebrow-light"><span className="eyebrow-dot"/> {eyebrow || 'SEED CO VEGETABLES / ZAMBIA'}</span><h1>{title}</h1>{description && <p>{description}</p>}</div><div className="page-hero-mark" aria-hidden="true">SC.</div></div>
  </div>;
 }
-export function SectionHeading({label,title,description,href,linkLabel}: {label:string;title:string;description?:string;href?:string;linkLabel?:string}) {
+export function SectionHeading({label,title,description,href,linkLabel}: {label:string;title:string;description?:string;href?:string|undefined;linkLabel?:string}) {
  return <div className="section-heading"><div><span className="eyebrow"><span className="eyebrow-dot"/> {label}</span><h2>{title}</h2>{description && <p>{description}</p>}</div>{href && <SiteLink path={href} className="text-link">{linkLabel || 'Explore all'} <ArrowUpRight size={19}/></SiteLink>}</div>;
 }
 export function CropCard({crop,index}: {crop:Crop;index:number}) {

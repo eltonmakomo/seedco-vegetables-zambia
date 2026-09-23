@@ -10,7 +10,7 @@ export function SiteLink({ path, children, className, onClick }: { path: string;
   const slug = sitePath(path);
   return slug ? <Link to="/$" params={{ _splat: slug }} className={className} onClick={onClick}>{children}</Link> : <Link to="/" className={className} onClick={onClick}>{children}</Link>;
 }
-const navigation = [
+const navigation: { label: string; path: string; links: [string, string][] }[] = [
   { label: 'About Us', path: 'about-us/overview', links: [
     ['Overview', 'about-us/overview'], ['Our Story', 'about-us/our-story'], ['Management Team', 'about-us/management-team'],
     ['Sales Team', 'about-us/sales-team'], ['Agronomists', 'about-us/agronomists'], ['Corporate Social Responsibility', 'about-us/corporate-social-responsibility'], ['Careers', 'about-us/careers'],
