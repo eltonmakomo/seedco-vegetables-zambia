@@ -1,0 +1,4 @@
+- [x] Map the live Zambia vegetable site, Seed Co Group visual identity, products, pages, and navigation.
+- [x] Save authentic crop and article images and original content into a country-specific catalogue.
+- [ ] Build the responsive Seed Co vegetable experience and every equivalent page.
+- [ ] Verify navigation, product details, metadata, mobile presentation, and missing links.
