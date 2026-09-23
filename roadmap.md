@@ -2,3 +2,4 @@
 - [x] Save authentic crop and article images and original content into a country-specific catalogue.
 - [x] Build the responsive Seed Co vegetable experience and every equivalent page.
 - [x] Verify navigation, product details, metadata, mobile presentation, and missing links.
+- [x] Apply the selected glassmorphic agro-modern visual direction across the website and verify desktop/mobile presentation.
