@@ -2,63 +2,77 @@
   "about-us/management-team": [
     {
       "name": "Grace Bwanali",
-      "role": "Managing Director"
+      "role": "Managing Director",
+      "photo": "/__l5e/assets-v1/26d0f4eb-e4b5-4cb9-8df9-8f194603fb6f/management-team-grace.jpg"
     },
     {
       "name": "Tichaona Ravasingadi",
-      "role": "Finance Director"
+      "role": "Finance Director",
+      "photo": "/__l5e/assets-v1/45129b76-ab69-4ab0-9004-32bf07d0ac42/management-team-ravasingadi.jpg"
     },
     {
       "name": "Mukumbi Kyalusanza",
-      "role": "Commercial Director"
+      "role": "Commercial Director",
+      "photo": "/__l5e/assets-v1/afe3482a-88eb-4660-9d82-3c97bec92e68/management-team-Mukumbi-Kyalusanza.jpg"
     },
     {
       "name": "Katende M Chibwe",
-      "role": "Vegetable Business Commercial Lead"
+      "role": "Vegetable Business Commercial Lead",
+      "photo": "/__l5e/assets-v1/98c6c8ae-dee6-4d2c-98a1-81e17ca3acb1/management-team-chibwe.jpg"
     },
     {
       "name": "Nyambe Mubita",
-      "role": "Human Resource Manager"
+      "role": "Human Resource Manager",
+      "photo": "/__l5e/assets-v1/a62d9360-1e8f-4a0b-9d72-cff10a01f4e4/management-team-nyambe.png"
     }
   ],
   "about-us/sales-team": [
     {
       "name": "Katende Chibwe",
-      "role": "Sales and Marketing Coordinator (Vegetables)"
+      "role": "Sales and Marketing Coordinator (Vegetables)",
+      "photo": "/__l5e/assets-v1/98c6c8ae-dee6-4d2c-98a1-81e17ca3acb1/management-team-chibwe.jpg"
     },
     {
       "name": "Simon Kalenga",
-      "role": "Sales Team member"
+      "role": "Sales Team member",
+      "photo": "/__l5e/assets-v1/d06b3968-c314-4271-abfa-88975401b3e7/sales-team-Simon__Kalenga.jpg"
     },
     {
       "name": "Mr. Musa Muyatwa",
-      "role": "Regional Sales Manager - Copperbelt Region"
+      "role": "Regional Sales Manager - Copperbelt Region",
+      "photo": "/__l5e/assets-v1/1544d78d-b8bb-47fb-9fd5-cad5226682bd/sales-team-musa.png"
     },
     {
       "name": "Mr. Kafula Chewe",
-      "role": "Regional Sales Manager – Northern Region (Kasama & Mpika)"
+      "role": "Regional Sales Manager \u2013 Northern Region (Kasama & Mpika)",
+      "photo": "/__l5e/assets-v1/cc510014-2029-4da9-b2c5-c169969ec81e/sales-team-kafula-chewe.png"
     },
     {
       "name": "Mr. Alex Shamane",
-      "role": "Regional Sales Manager – Southern & Western Region"
+      "role": "Regional Sales Manager \u2013 Southern & Western Region",
+      "photo": "/__l5e/assets-v1/6103a759-4012-4a54-aee5-4cdf3b8dd64b/sales-team-alex.png"
     },
     {
       "name": "Mrs. Grace  Kalungu",
-      "role": "Regional Sales Manager- Lusaka"
+      "role": "Regional Sales Manager- Lusaka",
+      "photo": "/__l5e/assets-v1/0c1c3d63-141e-44a8-871b-cb9caeb88981/sales-team-grace.png"
     },
     {
       "name": "Mr. Katowando Chawinga",
-      "role": "Regional Sales Manager – Central Region"
+      "role": "Regional Sales Manager \u2013 Central Region",
+      "photo": "/__l5e/assets-v1/bd85b793-c779-412f-bd88-7065414a4282/sales-team-katowando.png"
     },
     {
       "name": "Mr. Mathews Kandela",
-      "role": "Regional Sales Manager – Eastern Region"
+      "role": "Regional Sales Manager \u2013 Eastern Region",
+      "photo": "/__l5e/assets-v1/3a428b65-3dfa-42e3-aa34-36ce2ed2df4d/sales-team-mathews.png"
     }
   ],
   "about-us/research-team": [
     {
       "name": "Silas Mutota",
-      "role": ""
+      "role": "",
+      "photo": "/__l5e/assets-v1/ce927553-89ff-40d2-ac65-13c5256e415f/research-team-Silas-Mutota.jpg"
     },
     {
       "name": "Sydney Siachele",
