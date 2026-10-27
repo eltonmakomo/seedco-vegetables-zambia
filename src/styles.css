@@ -265,3 +265,4 @@ h1,h2,h3,h4{letter-spacing:0}
 .section-help h4{font-family:'Sora';font-size:20px;font-weight:700;margin:10px 0 6px}.section-help p{font-size:14px;opacity:.85;margin-bottom:14px}.section-help .text-link{color:#c8ed7d}
 .page-hero-copy h1{text-shadow:0 4px 30px rgba(0,0,0,.25)}
 @media(max-width:900px){.article-layout{grid-template-columns:1fr!important}.section-float{position:static}}
+html,body{overflow-x:clip!important}
