@@ -29,15 +29,43 @@ export function CropCard({crop,index}: {crop:Crop;index:number}) {
 export function ProductCard({product}: {product:Product}) {
  return <SiteLink path={product.path} className="product-card"><div className="product-card-image"><img src={product.image} alt={product.title} loading="lazy"/><span className="product-card-arrow"><ArrowUpRight size={19}/></span></div><div className="product-card-info"><span>{product.category.toUpperCase()}</span><h3>{product.title}</h3><p>Explore variety <ArrowRight size={16}/></p></div></SiteLink>;
 }
-function ContentBlocks({blocks}: {blocks:Block[]}) {
- return <div className="rich-content">{blocks.map((block,i) => {
+type Group = {head:Block|null;body:Block[]};
+type Statement = {head:Block;body:Block[]};
+const isHeadingBlock = (type:string) => /^h[2-5]$/.test(type);
+function splitGroups(blocks:Block[]):Group[] {
+ const out:Group[] = [];
+ let cur:Group = {head:null,body:[]};
+ blocks.forEach(b => { if (isHeadingBlock(b.type)) { out.push(cur); cur = {head:b,body:[]}; } else cur.body.push(b); });
+ out.push(cur);
+ return out.filter(g => g.head || g.body.length);
+}
+const isStatement = (g:Group): g is Statement => !!g.head && g.body.length <= 1 && g.body.every(b => b.type==='p' && !b.links?.length && b.text.length <= 220);
+const statementCount = (blocks:Block[]) => splitGroups(blocks).filter(isStatement).length;
+
+function ContentBlocks({blocks, cards}: {blocks:Block[]; cards?:boolean}) {
+ const renderBlock = (block:Block, key:string) => {
   const text = block.text;
-  if (/^h[2-5]$/.test(block.type))return <h2 key={i}>{text}</h2>;
-  if(block.type==='li')return <div key={i} className="rich-list-item"><Check size={15}/><span>{text}</span></div>;
-  if(block.type==='blockquote')return <blockquote key={i}>{text}</blockquote>;
-  if(block.type==='table')return <div key={i} className="rich-table-text">{text}</div>;
-  return <p key={i}>{text}{block.links?.filter(l=>l.href && l.text && !l.href.startsWith('javascript:') && !l.href.includes('localhost')).map((l,j)=><a key={j} href={l.href} target="_blank" rel="noreferrer" className="inline-link"> {l.text} ↗</a>)}</p>;
- })}</div>;
+  if (isHeadingBlock(block.type)) return <h2 key={key}>{text}</h2>;
+  if (block.type==='li') return <div key={key} className="rich-list-item"><Check size={15}/><span>{text}</span></div>;
+  if (block.type==='blockquote') return <blockquote key={key}>{text}</blockquote>;
+  if (block.type==='table') return <div key={key} className="rich-table-text">{text}</div>;
+  return <p key={key}>{text}{block.links?.filter(l=>l.href && l.text && !l.href.startsWith('javascript:') && !l.href.includes('localhost')).map((l,j)=><a key={j} href={l.href} target="_blank" rel="noreferrer" className="inline-link"> {l.text} ↗</a>)}</p>;
+ };
+ const units:(Block|Statement[])[] = [];
+ if (cards) {
+  let batch:Statement[] = [];
+  const flush = () => { if (batch.length) { units.push(batch); batch = []; } };
+  splitGroups(blocks).forEach(g => {
+   if (isStatement(g)) { batch.push(g); return; }
+   flush();
+   if (g.head) units.push(g.head);
+   g.body.forEach(b => units.push(b));
+  });
+  flush();
+ } else blocks.forEach(b => units.push(b));
+ return <div className="rich-content">{units.map((unit,i) => Array.isArray(unit)
+  ? <div className="statement-grid" key={`g${i}`}>{unit.map((g,j)=><div className="statement-card" key={j}><span className="statement-index">{String(j+1).padStart(2,'0')} / {String(unit.length).padStart(2,'0')}</span><h3>{g.head.text}</h3>{g.body.map((b,k)=><p key={k}>{b.text}</p>)}</div>)}</div>
+  : renderBlock(unit, `b${i}`))}</div>;
 }
 export function HomePage() {
  const featured = catalogue.products.filter(p => ['ALAMBRA F1','VS 209 F1','KITO F1','SUNSHINE F1'].includes(p.title)).slice(0,4);
@@ -116,6 +144,6 @@ export function ContentPage({item}: {item:Content}) {
  const related = item.path.startsWith('about-us/') ? ['about-us/overview','about-us/our-story','about-us/management-team','about-us/sales-team','about-us/agronomists','about-us/careers'].filter(p=>p!==item.path) : [];
  const specialLinks = item.path==='service-innovations'?['disease-tolerance','hybridization','yield-thrust','top-left-hybrids','climate-fast-varieties']:item.path==='about-us'?related:[];
  const people=team[item.path as keyof typeof team];
- return <><PageHeader title={item.title} image={item.image || harvest}/><section className="article-section"><div className="site-container article-layout"><div className="article-main">{item.blocks.length>0 && item.path!=='about-us/agronomists'?<ContentBlocks blocks={item.blocks}/>:null}{people?.length>0 && <div className="people-grid">{people.map(p=><div className="person-card" key={p.name}>{(p as {photo?:string}).photo ? <div className="person-photo"><img src={(p as {photo?:string}).photo} alt={p.name} loading="lazy"/></div> : <span className="person-initial">{p.name.trim().split(/\s+/).slice(0,2).map(s=>s[0]).join('')}</span>}<h3>{p.name}</h3><p>{p.role}</p></div>)}</div>}{item.path==='about-us/agronomists' && <AgronomistDirectory/>}{specialLinks.length>0 && <div className="related-links">{specialLinks.map(path=><SiteLink key={path} path={path}>{catalogue.pages.find(p=>p.path===path)?.title || path}<ArrowUpRight size={18}/></SiteLink>)}</div>}{item.path==='media/photo-gallery' && <div className="gallery-grid">{catalogue.articles.filter(a=>a.image).slice(0,9).map(a=><SiteLink key={a.path} path={a.path}><img src={a.image} alt={a.title}/></SiteLink>)}</div>}{item.path==='media/video-gallery' && <div className="related-links"><a href="https://www.youtube.com/channel/UCrlVuj5uYRjTRXJWSmkozjQ" target="_blank" rel="noreferrer">Seed Co video channel <ArrowUpRight size={18}/></a></div>}{item.path==='media/events-calendar' && <div className="related-links"><SiteLink path="contact-us">Ask about upcoming events <ArrowUpRight size={18}/></SiteLink></div>}{item.blocks.length===0 && !people?.length && item.path!=='about-us/agronomists' && !specialLinks.length && !['media/photo-gallery','media/video-gallery','media/events-calendar'].includes(item.path) && <p className="empty-copy">Explore more from Seed Co Zambia.</p>}</div><SectionNav path={item.path}/></div></section><CtaBand/></>;
+ return <><PageHeader title={item.title} image={item.image || harvest}/><section className="article-section"><div className="site-container article-layout"><div className="article-main">{item.blocks.length>0 && item.path!=='about-us/agronomists'?<ContentBlocks blocks={item.blocks} cards={statementCount(item.blocks)>=2}/>:null}{people?.length>0 && <div className="people-grid">{people.map(p=><div className="person-card" key={p.name}>{(p as {photo?:string}).photo ? <div className="person-photo"><img src={(p as {photo?:string}).photo} alt={p.name} loading="lazy"/></div> : <span className="person-initial">{p.name.trim().split(/\s+/).slice(0,2).map(s=>s[0]).join('')}</span>}<h3>{p.name}</h3><p>{p.role}</p></div>)}</div>}{item.path==='about-us/agronomists' && <AgronomistDirectory/>}{specialLinks.length>0 && <div className="related-links">{specialLinks.map(path=><SiteLink key={path} path={path}>{catalogue.pages.find(p=>p.path===path)?.title || path}<ArrowUpRight size={18}/></SiteLink>)}</div>}{item.path==='media/photo-gallery' && <div className="gallery-grid">{catalogue.articles.filter(a=>a.image).slice(0,9).map(a=><SiteLink key={a.path} path={a.path}><img src={a.image} alt={a.title}/></SiteLink>)}</div>}{item.path==='media/video-gallery' && <div className="related-links"><a href="https://www.youtube.com/channel/UCrlVuj5uYRjTRXJWSmkozjQ" target="_blank" rel="noreferrer">Seed Co video channel <ArrowUpRight size={18}/></a></div>}{item.path==='media/events-calendar' && <div className="related-links"><SiteLink path="contact-us">Ask about upcoming events <ArrowUpRight size={18}/></SiteLink></div>}{item.blocks.length===0 && !people?.length && item.path!=='about-us/agronomists' && !specialLinks.length && !['media/photo-gallery','media/video-gallery','media/events-calendar'].includes(item.path) && <p className="empty-copy">Explore more from Seed Co Zambia.</p>}</div><SectionNav path={item.path}/></div></section><CtaBand/></>;
 }
 export function NotFoundPage(){return <><PageHeader title="This page hasn't grown here." description="Let's help you find your way back." image={harvest}/><section className="page-section"><div className="site-container"><Button variant="brand" asChild><Link to="/">Back to home <ArrowRight size={16}/></Link></Button></div></section></>}
