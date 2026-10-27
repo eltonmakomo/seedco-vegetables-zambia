@@ -146,7 +146,7 @@
 /* Seed Co Vegetables — Zambia */
 :root { --seed-red:#ed1c24; --seed-green:#009f4f; --seed-dark:#113a2e; --seed-forest:#092f26; --seed-lime:#8cc63f; --seed-cream:#f6f7f1; --seed-ink:#1d302a; --seed-muted:#67736c; --primary:oklch(0.57 0.21 27); --ring:oklch(0.57 0.21 27); }
 html { scroll-behavior:smooth; }
-body { font-family:'Manrope',sans-serif; color:var(--seed-ink); background:#fff; overflow-x:hidden; }
+body { font-family:'Manrope',sans-serif; color:var(--seed-ink); background:#fff; overflow-x:clip; }
 button,a { -webkit-tap-highlight-color:transparent; }
 a { text-decoration:none; }
 button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible { outline:3px solid var(--seed-lime); outline-offset:3px; }
@@ -237,3 +237,32 @@ h1,h2,h3,h4{letter-spacing:0}
  .feature-copy{padding:48px 24px 60px}.product-card-image{height:205px}.page-hero-copy{padding:22px;margin:28px 0}.page-hero h1{font-size:clamp(50px,11vw,72px)}
 }
 @media(max-width:390px){.home-hero h1{font-size:45px}.hero-buttons{gap:11px}.hero-secondary{font-size:10px}.crop-section .section-heading h2{font-size:35px}}
+
+/* Inside pages: richer layout + floating section menu */
+.site-header{background:transparent!important;backdrop-filter:none!important}
+.site-header::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(255,255,255,.82);backdrop-filter:blur(20px) saturate(140%)}
+.nav-dropdown{background:rgba(255,255,255,.62)!important;backdrop-filter:blur(24px) saturate(160%)!important;border:1px solid rgba(255,255,255,.7)!important;border-top:3px solid var(--seed-red)!important}
+.dropdown-link:hover{background:rgba(220,235,217,.7)}
+.article-section{position:relative;padding:80px 0 110px;background:radial-gradient(circle at 92% 8%,rgba(140,198,63,.18),transparent 32%),radial-gradient(circle at 4% 90%,rgba(0,159,79,.1),transparent 30%),var(--seed-daylight)}
+.article-layout{grid-template-columns:minmax(0,1fr) 320px!important;gap:56px!important;align-items:start}
+.article-main{background:rgba(255,255,255,.78);backdrop-filter:blur(16px);border:1px solid #fff;border-radius:24px;padding:clamp(28px,4.5vw,56px);box-shadow:0 24px 60px rgba(9,47,38,.08);position:relative;overflow:hidden}
+.article-main::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--seed-green),var(--seed-lime),#ffcb05,var(--seed-red))}
+.article-main .rich-content>p:first-child{font-size:1.18em;line-height:1.7;color:var(--seed-ink);font-weight:600}
+.article-main .rich-content h2{position:relative;padding-left:18px}.article-main .rich-content h2::before{content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:5px;border-radius:4px;background:var(--seed-green)}
+.article-main blockquote{background:var(--seed-mist);border-left:5px solid var(--seed-red);border-radius:0 16px 16px 0;padding:22px 26px}
+.article-date{display:inline-flex;gap:8px;align-items:center;font-family:'Sora';font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--seed-green);background:var(--seed-mist);padding:8px 14px;border-radius:99px;margin-bottom:24px}
+.article-back{margin-top:34px}
+.section-float{position:sticky;top:110px;display:flex;flex-direction:column;gap:18px}
+.section-card{background:rgba(255,255,255,.7);backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,.9);border-radius:20px;padding:26px 24px;box-shadow:0 20px 50px rgba(9,47,38,.1)}
+.section-card-label{display:flex;gap:7px;align-items:center;font-family:'Sora';font-size:10px;font-weight:700;letter-spacing:.16em;color:var(--seed-green)}
+.section-card h3{font-family:'Sora';font-size:22px;font-weight:700;color:var(--seed-forest);margin:8px 0 14px}
+.section-link{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 10px;border-bottom:1px solid var(--seed-mist);font-size:14px;color:var(--seed-ink);border-radius:10px;transition:.2s}
+.section-link svg{opacity:0;transform:translateX(-4px);transition:.2s;color:var(--seed-red)}
+.section-link:hover{background:rgba(220,235,217,.6);color:var(--seed-green)}.section-link:hover svg{opacity:1;transform:none}
+.section-link.is-active{background:var(--seed-green);color:#fff;font-weight:700;border-color:transparent}.section-link.is-active svg{opacity:1;transform:none;color:#fff}
+.section-help{background:linear-gradient(140deg,var(--seed-forest),var(--seed-green));color:#fff;border-radius:20px;padding:26px 24px;position:relative;overflow:hidden}
+.section-help::after{content:"";position:absolute;right:-40px;bottom:-40px;width:140px;height:140px;border-radius:50%;background:rgba(200,237,125,.22)}
+.section-help h4{font-family:'Sora';font-size:20px;font-weight:700;margin:10px 0 6px}.section-help p{font-size:14px;opacity:.85;margin-bottom:14px}.section-help .text-link{color:#c8ed7d}
+.page-hero-copy h1{text-shadow:0 4px 30px rgba(0,0,0,.25)}
+@media(max-width:900px){.article-layout{grid-template-columns:1fr!important}.section-float{position:static}}
+html,body{overflow-x:clip!important}
