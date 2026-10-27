@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, ChevronRight, Leaf, Mail, MapPin, Phone, Search, Sprout } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, ChevronDown, ChevronRight, Leaf, Mail, MapPin, Phone, Search, Sprout } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import catalogue from '@/lib/seedco-content.json';
@@ -76,10 +76,46 @@ export function ListingPage({title,items,kind}: {title:string;items:Content[];ki
 export function ArticlePage({item}: {item:Content}) {return <><PageHeader eyebrow="SEED CO / STORIES" title={item.title} image={item.image || harvest}/><section className="article-section"><div className="site-container article-layout"><div className="article-main">{item.date && <span className="article-date"><CalendarDays size={15}/> {item.date}</span>}<ContentBlocks blocks={item.blocks}/><SiteLink path="blog" className="text-link article-back"><ArrowLeft size={17}/> All stories</SiteLink></div><SectionNav path="blog"/></div></section><CtaBand/></>}
 export function FaqPage(){return <><PageHeader title="Frequently asked questions." description="Answers to the questions growers ask most." image={harvest}/><section className="page-section"><div className="site-container faq-layout"><div><span className="eyebrow"><span className="eyebrow-dot"/> HERE TO HELP</span><h2>Good questions.<br/>Clear answers.</h2><p>Can't find the answer you are looking for?</p><SiteLink path="contact-us" className="text-link">Talk to our team <ArrowUpRight size={18}/></SiteLink></div><div className="faq-list">{catalogue.faq.map((faq,i)=><details key={i} className="faq-item"><summary><span>{faq.question}</span><span className="faq-toggle">+</span></summary><ContentBlocks blocks={faq.answer}/></details>)}</div></div></section></>}
 export function ContactPage(){return <><PageHeader title="Let’s talk growth." description="Your next great harvest starts with a conversation." image={harvest}/><section className="page-section"><div className="site-container contact-layout"><div><span className="eyebrow"><span className="eyebrow-dot"/> CONTACT SEED CO ZAMBIA</span><h2>We're here for you.</h2><p>From choosing the right variety to making the most of your crop, our team is ready to help.</p><Button asChild size="lg" variant="brand"><a href="mailto:Zambia.sales@seedcogroup.com">Email our sales team <ArrowUpRight size={17}/></a></Button></div><div className="contact-details"><a href="tel:+260211426400"><span><Phone size={24}/></span><div><small>CALL US</small><strong>+260 211 426 400</strong></div><ArrowUpRight size={20}/></a><a href="mailto:Zambia.sales@seedcogroup.com"><span><Mail size={24}/></span><div><small>SALES EMAIL</small><strong>Zambia.sales@seedcogroup.com</strong></div><ArrowUpRight size={20}/></a><a href="mailto:Zambia.seedco@seedcogroup.com"><span><Mail size={24}/></span><div><small>GENERAL ENQUIRIES</small><strong>Zambia.seedco@seedcogroup.com</strong></div><ArrowUpRight size={20}/></a><div><span><MapPin size={24}/></span><div><small>VISIT US</small><strong>SeedCo Business Complex</strong><p>Farm no 683 B, Mumbwa Road<br/>P.O. Box 35310, Lusaka, Zambia</p></div></div></div></div></section></>}
+const OFFICE_FIRST=['Seed Co Head Office'];
+
+export function AgronomistDirectory(){
+ const groups=useMemo(()=>{
+  const map=new Map<string,(typeof agronomists)[number][]>();
+  agronomists.forEach(p=>{const key=p.location||'Other';const list=map.get(key)||[];list.push(p);map.set(key,list);});
+  const rank=(name:string)=>{const i=OFFICE_FIRST.indexOf(name);return i===-1?OFFICE_FIRST.length:i;};
+  return Array.from(map.entries()).sort((a,b)=>rank(a[0])-rank(b[0])||a[0].localeCompare(b[0]));
+ },[]);
+ return <div className="region-accordion">
+  <p className="agronomist-intro">Find the Seed Co agronomist for your region. Open a region to see who covers it.</p>
+  {groups.map(([office,people],i)=>{
+   const districts=Array.from(new Set(people.map(p=>p.region))).sort((a,b)=>a.localeCompare(b));
+   return <details className="region-panel" key={office} name="agronomist-regions" open={i===0}>
+    <summary>
+     <span className="region-panel-mark"><MapPin size={16}/></span>
+     <span className="region-panel-titles"><strong>{office}</strong><small>{districts.join(' · ')}</small></span>
+     <span className="region-panel-count">{people.length}</span>
+     <ChevronDown className="region-panel-chevron" size={17}/>
+    </summary>
+    <div className="region-panel-body">
+     {people.map(p=>{
+      const cut=p.name.search(/\s+[–-]\s+/);
+      const name=cut===-1?p.name:p.name.slice(0,cut);
+      const role=cut===-1?'':p.name.slice(cut).replace(/^\s+[–-]\s+/,'');
+      return <div className="agronomist-row" key={p.name}>
+       <div><strong>{name}</strong>{role&&<em>{role}</em>}<span>{p.region}</span></div>
+       <a href={`tel:${p.phone.replace(/\D/g,'')}`}><Phone size={15}/>{p.phone}</a>
+      </div>;
+     })}
+    </div>
+   </details>;
+  })}
+ </div>;
+}
+
 export function ContentPage({item}: {item:Content}) {
  const related = item.path.startsWith('about-us/') ? ['about-us/overview','about-us/our-story','about-us/management-team','about-us/sales-team','about-us/agronomists','about-us/careers'].filter(p=>p!==item.path) : [];
  const specialLinks = item.path==='service-innovations'?['disease-tolerance','hybridization','yield-thrust','top-left-hybrids','climate-fast-varieties']:item.path==='about-us'?related:[];
  const people=team[item.path as keyof typeof team];
- return <><PageHeader title={item.title} image={item.image || harvest}/><section className="article-section"><div className="site-container article-layout"><div className="article-main">{item.blocks.length>0 && item.path!=='about-us/agronomists'?<ContentBlocks blocks={item.blocks}/>:null}{people?.length>0 && <div className="people-grid">{people.map(p=><div className="person-card" key={p.name}>{(p as {photo?:string}).photo ? <div className="person-photo"><img src={(p as {photo?:string}).photo} alt={p.name} loading="lazy"/></div> : <span className="person-initial">{p.name.trim().split(/\s+/).slice(0,2).map(s=>s[0]).join('')}</span>}<h3>{p.name}</h3><p>{p.role}</p></div>)}</div>}{item.path==='about-us/agronomists' && <div className="agronomist-list"><p>Find the Seed Co agronomist for your region.</p>{agronomists.map(p=><div className="agronomist-row" key={p.name}><div><strong>{p.name}</strong><span>{p.region} · {p.location}</span></div><a href={`tel:${p.phone.replace(/\D/g,'')}`}><Phone size={15}/>{p.phone}</a></div>)}</div>}{specialLinks.length>0 && <div className="related-links">{specialLinks.map(path=><SiteLink key={path} path={path}>{catalogue.pages.find(p=>p.path===path)?.title || path}<ArrowUpRight size={18}/></SiteLink>)}</div>}{item.path==='media/photo-gallery' && <div className="gallery-grid">{catalogue.articles.filter(a=>a.image).slice(0,9).map(a=><SiteLink key={a.path} path={a.path}><img src={a.image} alt={a.title}/></SiteLink>)}</div>}{item.path==='media/video-gallery' && <div className="related-links"><a href="https://www.youtube.com/channel/UCrlVuj5uYRjTRXJWSmkozjQ" target="_blank" rel="noreferrer">Seed Co video channel <ArrowUpRight size={18}/></a></div>}{item.path==='media/events-calendar' && <div className="related-links"><SiteLink path="contact-us">Ask about upcoming events <ArrowUpRight size={18}/></SiteLink></div>}{item.blocks.length===0 && !people?.length && item.path!=='about-us/agronomists' && !specialLinks.length && !['media/photo-gallery','media/video-gallery','media/events-calendar'].includes(item.path) && <p className="empty-copy">Explore more from Seed Co Zambia.</p>}</div><SectionNav path={item.path}/></div></section><CtaBand/></>;
+ return <><PageHeader title={item.title} image={item.image || harvest}/><section className="article-section"><div className="site-container article-layout"><div className="article-main">{item.blocks.length>0 && item.path!=='about-us/agronomists'?<ContentBlocks blocks={item.blocks}/>:null}{people?.length>0 && <div className="people-grid">{people.map(p=><div className="person-card" key={p.name}>{(p as {photo?:string}).photo ? <div className="person-photo"><img src={(p as {photo?:string}).photo} alt={p.name} loading="lazy"/></div> : <span className="person-initial">{p.name.trim().split(/\s+/).slice(0,2).map(s=>s[0]).join('')}</span>}<h3>{p.name}</h3><p>{p.role}</p></div>)}</div>}{item.path==='about-us/agronomists' && <AgronomistDirectory/>}{specialLinks.length>0 && <div className="related-links">{specialLinks.map(path=><SiteLink key={path} path={path}>{catalogue.pages.find(p=>p.path===path)?.title || path}<ArrowUpRight size={18}/></SiteLink>)}</div>}{item.path==='media/photo-gallery' && <div className="gallery-grid">{catalogue.articles.filter(a=>a.image).slice(0,9).map(a=><SiteLink key={a.path} path={a.path}><img src={a.image} alt={a.title}/></SiteLink>)}</div>}{item.path==='media/video-gallery' && <div className="related-links"><a href="https://www.youtube.com/channel/UCrlVuj5uYRjTRXJWSmkozjQ" target="_blank" rel="noreferrer">Seed Co video channel <ArrowUpRight size={18}/></a></div>}{item.path==='media/events-calendar' && <div className="related-links"><SiteLink path="contact-us">Ask about upcoming events <ArrowUpRight size={18}/></SiteLink></div>}{item.blocks.length===0 && !people?.length && item.path!=='about-us/agronomists' && !specialLinks.length && !['media/photo-gallery','media/video-gallery','media/events-calendar'].includes(item.path) && <p className="empty-copy">Explore more from Seed Co Zambia.</p>}</div><SectionNav path={item.path}/></div></section><CtaBand/></>;
 }
 export function NotFoundPage(){return <><PageHeader title="This page hasn't grown here." description="Let's help you find your way back." image={harvest}/><section className="page-section"><div className="site-container"><Button variant="brand" asChild><Link to="/">Back to home <ArrowRight size={16}/></Link></Button></div></section></>}
