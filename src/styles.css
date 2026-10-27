@@ -146,7 +146,7 @@
 /* Seed Co Vegetables — Zambia */
 :root { --seed-red:#ed1c24; --seed-green:#009f4f; --seed-dark:#113a2e; --seed-forest:#092f26; --seed-lime:#8cc63f; --seed-cream:#f6f7f1; --seed-ink:#1d302a; --seed-muted:#67736c; --primary:oklch(0.57 0.21 27); --ring:oklch(0.57 0.21 27); }
 html { scroll-behavior:smooth; }
-body { font-family:'Manrope',sans-serif; color:var(--seed-ink); background:#fff; overflow-x:hidden; }
+body { font-family:'Manrope',sans-serif; color:var(--seed-ink); background:#fff; overflow-x:clip; }
 button,a { -webkit-tap-highlight-color:transparent; }
 a { text-decoration:none; }
 button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible { outline:3px solid var(--seed-lime); outline-offset:3px; }
