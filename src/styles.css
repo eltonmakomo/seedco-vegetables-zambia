@@ -202,7 +202,7 @@ h1,h2,h3,h4{letter-spacing:0}
 .home-hero-text p{color:var(--hero-foreground);max-width:440px;text-shadow:0 1px 12px rgba(5,38,29,.3)}
 .home-hero .eyebrow{background:var(--hero-light);backdrop-filter:blur(18px) saturate(140%);border:1px solid var(--seed-glass-border);padding:10px 14px;border-radius:6px;color:var(--hero-foreground);letter-spacing:.12em;box-shadow:0 8px 24px rgba(5,38,29,.1)}
 .home-hero .eyebrow-dot{background:var(--hero-highlight)}
-.hero-buttons .h-10{background:var(--hero-foreground);color:var(--seed-dark);border-color:var(--hero-foreground);border-radius:6px;font-weight:700;box-shadow:0 10px 28px rgba(5,38,29,.22)}.hero-buttons .h-10:hover{background:var(--hero-highlight);border-color:var(--hero-highlight);color:var(--seed-dark);transform:translateY(-2px)}
+.hero-buttons .h-10{background:var(--hero-foreground);color:var(--seed-dark);border-color:var(--hero-foreground);border-radius:6px;font-weight:700;box-shadow:0 10px 28px rgba(5,38,29,.22)}.hero-buttons .h-10:hover{background:var(--seed-green);border-color:var(--seed-green);color:#fff;transform:translateY(-2px)}
 .hero-secondary{color:var(--hero-foreground);text-shadow:0 1px 12px rgba(5,38,29,.3)}
 .hero-bottom{bottom:20px;color:var(--hero-foreground)}
 .home-intro{position:relative;background:var(--seed-daylight);padding:70px 0 82px}
