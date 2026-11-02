@@ -208,7 +208,7 @@ h1,h2,h3,h4{letter-spacing:0}
 .home-intro{position:relative;background:var(--seed-daylight);padding:70px 0 82px}
 .intro-grid{background:rgba(255,255,255,.8);backdrop-filter:blur(18px);border:1px solid white;border-radius:14px;box-shadow:var(--seed-shadow);padding:55px 65px;gap:7%}
 .intro-lead h2{font-size:clamp(48px,5vw,76px)}
-.crop-section,.featured-section{background:var(--seed-daylight)}
+.crop-section,.featured-section{background:var(--seed-daylight)}.featured-section{padding-top:0}
 .crop-grid{gap:16px}
 .crop-card{background:var(--seed-mist);border-radius:12px;position:relative;isolation:isolate;box-shadow:0 8px 20px rgba(0,0,0,.06)}
 .crop-image-wrap{height:340px;background:var(--seed-mist)}
