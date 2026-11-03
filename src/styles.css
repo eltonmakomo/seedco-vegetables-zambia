@@ -220,7 +220,7 @@ h1,h2,h3,h4{letter-spacing:0}
 .product-card{border-radius:12px;overflow:hidden;background:white;border:1px solid var(--seed-mist)}
 .product-card-image{height:270px}.product-card-arrow{border-radius:50%;background:rgba(255,255,255,.8);backdrop-filter:blur(12px)}
 .story-image{border-radius:10px;overflow:hidden}.journal-section{background:#ffffff}
-.story-image span{border-radius:9px 0 0 0}.cta-band{background:var(--seed-green)}
+.story-image span{border-radius:9px 0 0 0}.cta-band{background:#2fb468}
 .page-hero:after{background:linear-gradient(90deg,rgba(2,160,78,.84),rgba(2,160,78,.28))}
 .page-hero-copy{padding:28px 34px;background:rgba(2,160,78,.49);backdrop-filter:blur(15px);border:1px solid var(--seed-glass-border);border-radius:14px;margin:45px 0}
 .person-card,.related-links a,.category-switch a{border-radius:9px}
