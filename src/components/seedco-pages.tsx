@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, ChevronDown, ChevronRight, Leaf, Mail, MapPin, Phone, Search, Sprout } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, ChevronDown, ChevronLeft, ChevronRight, Leaf, Mail, MapPin, Phone, Search, Sprout, X } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import catalogue from '@/lib/seedco-content.json';
 import team from '@/lib/seedco-team.json';
@@ -138,6 +138,29 @@ export function AgronomistDirectory(){
    </details>;
   })}
  </div>;
+}
+
+export function PhotoGallery(){
+ const shots=useMemo(()=>catalogue.articles.filter(a=>a.image).slice(0,9),[]);
+ const [open,setOpen]=useState<number|null>(null);
+ useEffect(()=>{
+  if(open===null)return;
+  document.body.style.overflow='hidden';
+  const onKey=(e:KeyboardEvent)=>{
+   if(e.key==='Escape')setOpen(null);
+   if(e.key==='ArrowRight')setOpen(i=>i===null?null:(i+1)%shots.length);
+   if(e.key==='ArrowLeft')setOpen(i=>i===null?null:(i-1+shots.length)%shots.length);
+  };
+  document.addEventListener('keydown',onKey);
+  return ()=>{document.body.style.overflow='';document.removeEventListener('keydown',onKey);};
+ },[open,shots.length]);
+ return <><div className="gallery-grid">{shots.map((a,i)=><button type="button" className="gallery-item" key={a.path} onClick={()=>setOpen(i)} aria-label={`View photo: ${a.title}`}><img src={a.image} alt={a.title} loading="lazy"/></button>)}</div>
+ {open!==null && <div className="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" onClick={()=>setOpen(null)}>
+  <button type="button" className="lightbox-close" aria-label="Close photo" onClick={()=>setOpen(null)}><X size={22}/></button>
+  <button type="button" className="lightbox-nav lightbox-prev" aria-label="Previous photo" onClick={e=>{e.stopPropagation();setOpen((open-1+shots.length)%shots.length);}}><ChevronLeft size={26}/></button>
+  <figure onClick={e=>e.stopPropagation()}><img src={shots[open].image} alt={shots[open].title}/><figcaption>{shots[open].title}</figcaption></figure>
+  <button type="button" className="lightbox-nav lightbox-next" aria-label="Next photo" onClick={e=>{e.stopPropagation();setOpen((open+1)%shots.length);}}><ChevronRight size={26}/></button>
+ </div>}</>;
 }
 
 export function ContentPage({item}: {item:Content}) {
