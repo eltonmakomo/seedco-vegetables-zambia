@@ -1,7 +1,5 @@
-- [x] Map the live Zambia vegetable site, Seed Co Group visual identity, products, pages, and navigation.
-- [x] Save authentic crop and article images and original content into a country-specific catalogue.
-- [x] Build the responsive Seed Co vegetable experience and every equivalent page.
-- [x] Verify navigation, product details, metadata, mobile presentation, and missing links.
-- [x] Apply the selected glassmorphic agro-modern visual direction across the website and verify desktop/mobile presentation.
-- [x] Restore inside-page banner flow and visible content after the shared image class collision.
-- [x] Refine the homepage banner in the selected luminous botanical glass direction without changing the rest of the homepage.
+# Roadmap
+
+- [x] Header buttons: swap roles — "Buy seed online" is now the red button; "Explore seeds" removed
+- [x] Photo gallery: clicking an image no longer goes to stories (lightbox instead)
+- [ ] Photo gallery: display all images as a gallery slider (in progress)
