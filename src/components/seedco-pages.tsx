@@ -141,26 +141,27 @@ export function AgronomistDirectory(){
 }
 
 export function PhotoGallery(){
- const shots=useMemo(()=>catalogue.articles.filter(a=>a.image).slice(0,9),[]);
- const [open,setOpen]=useState<number|null>(null);
+ const shots=useMemo(()=>catalogue.articles.filter(a=>a.image),[]);
+ const [index,setIndex]=useState(0);
+ const go=(d:number)=>setIndex(i=>(i+d+shots.length)%shots.length);
  useEffect(()=>{
-  if(open===null)return;
-  document.body.style.overflow='hidden';
-  const onKey=(e:KeyboardEvent)=>{
-   if(e.key==='Escape')setOpen(null);
-   if(e.key==='ArrowRight')setOpen(i=>i===null?null:(i+1)%shots.length);
-   if(e.key==='ArrowLeft')setOpen(i=>i===null?null:(i-1+shots.length)%shots.length);
-  };
+  const onKey=(e:KeyboardEvent)=>{ if(e.key==='ArrowRight')setIndex(i=>(i+1)%shots.length); if(e.key==='ArrowLeft')setIndex(i=>(i-1+shots.length)%shots.length); };
   document.addEventListener('keydown',onKey);
-  return ()=>{document.body.style.overflow='';document.removeEventListener('keydown',onKey);};
- },[open,shots.length]);
- return <><div className="gallery-grid">{shots.map((a,i)=><button type="button" className="gallery-item" key={a.path} onClick={()=>setOpen(i)} aria-label={`View photo: ${a.title}`}><img src={a.image} alt={a.title} loading="lazy"/></button>)}</div>
- {open!==null && <div className="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" onClick={()=>setOpen(null)}>
-  <button type="button" className="lightbox-close" aria-label="Close photo" onClick={()=>setOpen(null)}><X size={22}/></button>
-  <button type="button" className="lightbox-nav lightbox-prev" aria-label="Previous photo" onClick={e=>{e.stopPropagation();setOpen((open-1+shots.length)%shots.length);}}><ChevronLeft size={26}/></button>
-  <figure onClick={e=>e.stopPropagation()}><img src={shots[open].image} alt={shots[open].title}/><figcaption>{shots[open].title}</figcaption></figure>
-  <button type="button" className="lightbox-nav lightbox-next" aria-label="Next photo" onClick={e=>{e.stopPropagation();setOpen((open+1)%shots.length);}}><ChevronRight size={26}/></button>
- </div>}</>;
+  return ()=>document.removeEventListener('keydown',onKey);
+ },[shots.length]);
+ if(!shots.length)return null;
+ const current=shots[index];
+ return <div className="gallery-slider">
+  <div className="slider-stage">
+   <img key={current.path} src={current.image} alt={current.title}/>
+   <div className="slider-caption"><span className="slider-count">{String(index+1).padStart(2,'0')} / {String(shots.length).padStart(2,'0')}</span><strong>{current.title}</strong></div>
+   <button type="button" className="slider-arrow slider-prev" aria-label="Previous photo" onClick={()=>go(-1)}><ChevronLeft size={24}/></button>
+   <button type="button" className="slider-arrow slider-next" aria-label="Next photo" onClick={()=>go(1)}><ChevronRight size={24}/></button>
+  </div>
+  <div className="slider-thumbs" role="tablist" aria-label="Gallery photos">
+   {shots.map((a,i)=><button type="button" key={a.path} role="tab" aria-selected={i===index} aria-label={`Photo ${i+1}: ${a.title}`} className={i===index?'slider-thumb active':'slider-thumb'} onClick={()=>setIndex(i)}><img src={a.image} alt="" loading="lazy"/></button>)}
+  </div>
+ </div>;
 }
 
 export function ContentPage({item}: {item:Content}) {
