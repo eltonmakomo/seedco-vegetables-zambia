@@ -239,7 +239,7 @@ h1,h2,h3,h4{letter-spacing:0}
 /* Inside pages: richer layout + floating section menu */
 .site-header{background:transparent!important;backdrop-filter:none!important}
 .site-header::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(255,255,255,.82);backdrop-filter:blur(20px) saturate(140%)}
-.nav-dropdown,.country-list{background:linear-gradient(165deg,rgba(2,160,78,.78),rgba(2,160,78,.68))!important;backdrop-filter:blur(26px) saturate(170%)!important;border:1px solid rgba(255,255,255,.22)!important;border-top:3px solid var(--seed-red)!important;box-shadow:0 26px 62px rgba(0,0,0,.34)!important;color:#fff}
+.nav-dropdown,.country-list{background:linear-gradient(165deg,rgba(2,160,78,.58),rgba(2,160,78,.46))!important;backdrop-filter:blur(26px) saturate(170%)!important;border:1px solid rgba(255,255,255,.22)!important;border-top:3px solid var(--seed-red)!important;box-shadow:0 26px 62px rgba(0,0,0,.34)!important;color:#fff}
 .dropdown-head{color:rgba(255,255,255,.8)!important}
 .dropdown-link{color:#fff!important}
 .dropdown-link svg{color:var(--seed-lime)!important}
