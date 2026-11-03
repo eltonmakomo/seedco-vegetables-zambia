@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, ChevronDown, ChevronRight, Leaf, Mail, MapPin, Phone, Search, Sprout } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, ChevronDown, ChevronLeft, ChevronRight, Leaf, Mail, MapPin, Phone, Search, Sprout } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import catalogue from '@/lib/seedco-content.json';
 import team from '@/lib/seedco-team.json';
@@ -140,10 +140,34 @@ export function AgronomistDirectory(){
  </div>;
 }
 
+export function PhotoGallery(){
+ const shots=useMemo(()=>catalogue.articles.filter(a=>a.image),[]);
+ const [index,setIndex]=useState(0);
+ const go=(d:number)=>setIndex(i=>(i+d+shots.length)%shots.length);
+ useEffect(()=>{
+  const onKey=(e:KeyboardEvent)=>{ if(e.key==='ArrowRight')setIndex(i=>(i+1)%shots.length); if(e.key==='ArrowLeft')setIndex(i=>(i-1+shots.length)%shots.length); };
+  document.addEventListener('keydown',onKey);
+  return ()=>document.removeEventListener('keydown',onKey);
+ },[shots.length]);
+ if(!shots.length)return null;
+ const current=shots[index]!;
+ return <div className="gallery-slider">
+  <div className="slider-stage">
+   <img key={current.path} src={current.image} alt={current.title}/>
+   <div className="slider-caption"><span className="slider-count">{String(index+1).padStart(2,'0')} / {String(shots.length).padStart(2,'0')}</span><strong>{current.title}</strong></div>
+   <button type="button" className="slider-arrow slider-prev" aria-label="Previous photo" onClick={()=>go(-1)}><ChevronLeft size={24}/></button>
+   <button type="button" className="slider-arrow slider-next" aria-label="Next photo" onClick={()=>go(1)}><ChevronRight size={24}/></button>
+  </div>
+  <div className="slider-thumbs" role="tablist" aria-label="Gallery photos">
+   {shots.map((a,i)=><button type="button" key={a.path} role="tab" aria-selected={i===index} aria-label={`Photo ${i+1}: ${a.title}`} className={i===index?'slider-thumb active':'slider-thumb'} onClick={()=>setIndex(i)}><img src={a.image} alt="" loading="lazy"/></button>)}
+  </div>
+ </div>;
+}
+
 export function ContentPage({item}: {item:Content}) {
  const related = item.path.startsWith('about-us/') ? ['about-us/overview','about-us/our-story','about-us/management-team','about-us/sales-team','about-us/agronomists','about-us/careers'].filter(p=>p!==item.path) : [];
  const specialLinks = item.path==='service-innovations'?['disease-tolerance','hybridization','yield-thrust','top-left-hybrids','climate-fast-varieties']:item.path==='about-us'?related:[];
  const people=team[item.path as keyof typeof team];
- return <><PageHeader title={item.title} image={item.image || harvest}/><section className="article-section"><div className="site-container article-layout"><div className="article-main">{item.blocks.length>0 && item.path!=='about-us/agronomists'?<ContentBlocks blocks={item.blocks} cards={statementCount(item.blocks)>=2}/>:null}{people?.length>0 && <div className="people-grid">{people.map(p=><div className="person-card" key={p.name}>{(p as {photo?:string}).photo ? <div className="person-photo"><img src={(p as {photo?:string}).photo} alt={p.name} loading="lazy"/></div> : <span className="person-initial">{p.name.trim().split(/\s+/).slice(0,2).map(s=>s[0]).join('')}</span>}<h3>{p.name}</h3><p>{p.role}</p></div>)}</div>}{item.path==='about-us/agronomists' && <AgronomistDirectory/>}{specialLinks.length>0 && <div className="related-links">{specialLinks.map(path=><SiteLink key={path} path={path}>{catalogue.pages.find(p=>p.path===path)?.title || path}<ArrowUpRight size={18}/></SiteLink>)}</div>}{item.path==='media/photo-gallery' && <div className="gallery-grid">{catalogue.articles.filter(a=>a.image).slice(0,9).map(a=><SiteLink key={a.path} path={a.path}><img src={a.image} alt={a.title}/></SiteLink>)}</div>}{item.path==='media/video-gallery' && <div className="related-links"><a href="https://www.youtube.com/channel/UCrlVuj5uYRjTRXJWSmkozjQ" target="_blank" rel="noreferrer">Seed Co video channel <ArrowUpRight size={18}/></a></div>}{item.path==='media/events-calendar' && <div className="related-links"><SiteLink path="contact-us">Ask about upcoming events <ArrowUpRight size={18}/></SiteLink></div>}{item.blocks.length===0 && !people?.length && item.path!=='about-us/agronomists' && !specialLinks.length && !['media/photo-gallery','media/video-gallery','media/events-calendar'].includes(item.path) && <p className="empty-copy">Explore more from Seed Co Zambia.</p>}</div><SectionNav path={item.path}/></div></section><CtaBand/></>;
+ return <><PageHeader title={item.title} image={item.image || harvest}/><section className="article-section"><div className="site-container article-layout"><div className="article-main">{item.blocks.length>0 && item.path!=='about-us/agronomists'?<ContentBlocks blocks={item.blocks} cards={statementCount(item.blocks)>=2}/>:null}{people?.length>0 && <div className="people-grid">{people.map(p=><div className="person-card" key={p.name}>{(p as {photo?:string}).photo ? <div className="person-photo"><img src={(p as {photo?:string}).photo} alt={p.name} loading="lazy"/></div> : <span className="person-initial">{p.name.trim().split(/\s+/).slice(0,2).map(s=>s[0]).join('')}</span>}<h3>{p.name}</h3><p>{p.role}</p></div>)}</div>}{item.path==='about-us/agronomists' && <AgronomistDirectory/>}{specialLinks.length>0 && <div className="related-links">{specialLinks.map(path=><SiteLink key={path} path={path}>{catalogue.pages.find(p=>p.path===path)?.title || path}<ArrowUpRight size={18}/></SiteLink>)}</div>}{item.path==='media/photo-gallery' && <PhotoGallery/>}{item.path==='media/video-gallery' && <div className="related-links"><a href="https://www.youtube.com/channel/UCrlVuj5uYRjTRXJWSmkozjQ" target="_blank" rel="noreferrer">Seed Co video channel <ArrowUpRight size={18}/></a></div>}{item.path==='media/events-calendar' && <div className="related-links"><SiteLink path="contact-us">Ask about upcoming events <ArrowUpRight size={18}/></SiteLink></div>}{item.blocks.length===0 && !people?.length && item.path!=='about-us/agronomists' && !specialLinks.length && !['media/photo-gallery','media/video-gallery','media/events-calendar'].includes(item.path) && <p className="empty-copy">Explore more from Seed Co Zambia.</p>}</div><SectionNav path={item.path}/></div></section><CtaBand/></>;
 }
 export function NotFoundPage(){return <><PageHeader title="This page hasn't grown here." description="Let's help you find your way back." image={harvest}/><section className="page-section"><div className="site-container"><Button variant="brand" asChild><Link to="/">Back to home <ArrowRight size={16}/></Link></Button></div></section></>}
