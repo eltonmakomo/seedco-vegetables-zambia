@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, ChevronDown, ChevronLeft, ChevronRight, Leaf, Mail, MapPin, Phone, Search, Sprout } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, ChevronDown, ChevronLeft, ChevronRight, Leaf, Mail, MapPin, Phone, Search, Sprout } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import catalogue from '@/lib/seedco-content.json';
