@@ -154,7 +154,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible {
 .utility-bar {height:36px;background:#02A04E;color:rgba(255,255,255,.85);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:.09em;}
 .utility-inner,.utility-right,.utility-label {display:flex;align-items:center;gap:13px;height:100%;}
 .utility-right {margin-left:auto;gap:20px;letter-spacing:0;text-transform:none;font-size:11px;}
-.utility-right a {display:inline-flex;align-items:center;gap:5px;transition:color .2s;}.utility-right a:hover{color:var(--seed-lime)}
+.utility-right a {display:inline-flex;align-items:center;gap:5px;transition:opacity .2s;}.utility-right a:hover{opacity:.75;color:#fff}
 .utility-divider {height:13px;width:1px;background:rgba(255,255,255,.28);display:inline-block;}
 .site-header{height:86px;background:#fff;position:relative;z-index:40;box-shadow:0 2px 14px #00000010;}
 .header-inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:30px;}
