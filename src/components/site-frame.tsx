@@ -36,7 +36,7 @@ export function SiteFrame() {
   const close = () => { setMobileOpen(false); setOpenSection(null); };
   return <div className="site-shell" key={pathname}>
     <div className="utility-bar"><div className="site-container utility-inner">
-      <div className="country-picker"><button type="button" aria-label="Choose country"><MapPin size={13} /> ZAMBIA <ChevronDown size={12}/></button><div className="country-list"><span>EXPLORE SEED CO IN AFRICA</span>{countries.map(([name,href])=><a href={href} key={name} target="_blank" rel="noreferrer">{name}<ArrowRight size={13}/></a>)}</div></div><span className="utility-slogan"><span className="utility-divider"/> THE HOME OF BUMPER HARVESTS</span>
+      <div className="country-picker"><button type="button" aria-label="Choose country"><MapPin size={13} /> ZAMBIA <ChevronDown size={12}/></button><div className="country-list"><span>EXPLORE SEED CO IN AFRICA</span>{countries.map(([name,href])=><a href={href} key={name} target="_blank" rel="noreferrer">{name}<ArrowRight size={13}/></a>)}</div></div>
       <div className="utility-right"><a href="http://139.84.241.235/scg/" target="_blank" rel="noreferrer">Seed Co Group ↗</a><span className="utility-divider"/><SiteLink path="contact-us">Get in touch <ArrowRight size={13}/></SiteLink></div>
     </div></div>
     <header className="site-header"><div className="site-container header-inner">
