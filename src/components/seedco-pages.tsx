@@ -150,7 +150,7 @@ export function PhotoGallery(){
   return ()=>document.removeEventListener('keydown',onKey);
  },[shots.length]);
  if(!shots.length)return null;
- const current=shots[index];
+ const current=shots[index] ?? shots[0];
  return <div className="gallery-slider">
   <div className="slider-stage">
    <img key={current.path} src={current.image} alt={current.title}/>
